@@ -79,13 +79,18 @@ jobs:
           pip install -r requirements-base.txt
           pip install -r requirements.txt
 
-      - name: Mock Airflow Env
+      - name: Set Mock Airflow Env
         run: |
           airflow db init
 
       - name: Run pytest
         run: |
           pytest -v --disable-warnings
+
+      - name: Linting with ruff
+        run: |
+          ruff check ./src/dags ./src/plugins tests
+          
 
       - name: 📋 Report cache status
         if: always()

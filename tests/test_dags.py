@@ -44,6 +44,6 @@ def test_dag_schedule_and_tags(dag_bag):
     my_dag = dag_bag.get_dag("hello_world")
     assert my_dag.schedule_interval == "0 12 * * *"
     assert "production" in my_dag.tags
-    assert my_dag.catchup == False
+    assert not my_dag.catchup
 
 

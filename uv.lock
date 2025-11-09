@@ -157,6 +157,7 @@ dependencies = [
     { name = "ansible", version = "10.7.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.11'" },
     { name = "ansible", version = "12.2.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.11'" },
     { name = "apache-airflow" },
+    { name = "apache-airflow-providers-standard" },
     { name = "pytest" },
 ]
 
@@ -169,6 +170,7 @@ dev = [
 requires-dist = [
     { name = "ansible", specifier = ">=10.7.0" },
     { name = "apache-airflow", specifier = "==2.9.1" },
+    { name = "apache-airflow-providers-standard", specifier = ">=0.0.1" },
     { name = "pytest", specifier = ">=9.0.0" },
 ]
 
@@ -474,6 +476,18 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/8a/1e/254a3367b35414780bb607e39c17abf91977a9a8eb252e2bf0a7bbbbf61d/apache_airflow_providers_sqlite-4.0.2.tar.gz", hash = "sha256:6c1a410df5e09cad86772468b8eb7244afb5e5c42dff3675a8fc6dea2610a26b", size = 44163, upload-time = "2025-04-14T07:14:10.1Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/88/f7/9b41bf6b463b9a80db586fd8eb4a923d1f6ba69d8992eb4b751aa1baf3f7/apache_airflow_providers_sqlite-4.0.2-py3-none-any.whl", hash = "sha256:df5cc947621e7268a530e3ff5da6eb7c8a7063b2a7212ea83f851ffb57828dbe", size = 11076, upload-time = "2025-04-14T07:13:45.32Z" },
+]
+
+[[package]]
+name = "apache-airflow-providers-standard"
+version = "1.1.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "apache-airflow" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/4a/1c/9d03bc0252b10b49d0a871d85e84a6f12ec2fa28ea2187d2db7b28cc30ac/apache_airflow_providers_standard-1.1.0.tar.gz", hash = "sha256:41efe1b9226dd09c84f1dedb9f9f024c0911bba882c8aa69ffe6d086b03ef302", size = 154036, upload-time = "2025-04-28T07:38:23.481Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/9c/a2/26f8a185b933012a267699ee6734b0c49c9fcf5617c6e8bc19b1facb5343/apache_airflow_providers_standard-1.1.0-py3-none-any.whl", hash = "sha256:0bb1885363cc7a2ac78b10a19eb27afb675ad0c149619dc5fbe4e179ca45b965", size = 102347, upload-time = "2025-04-28T07:38:20.019Z" },
 ]
 
 [[package]]

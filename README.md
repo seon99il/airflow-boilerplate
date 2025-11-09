@@ -18,6 +18,13 @@ uv sync
 sh ./scripts/docker-compose-up.sh
 ```
 
+#### Unit Test
+
+```shell
+$ uv run airflow db init # Local Airflow 환경이 필요할 수 있습니다.
+$ uv run pytest -v
+```
+
 #### CI
 
 ```shell

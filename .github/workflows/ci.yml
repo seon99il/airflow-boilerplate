@@ -79,6 +79,10 @@ jobs:
           pip install -r requirements-base.txt
           pip install -r requirements.txt
 
+      - name: Mock Airflow Env
+        run: |
+          airflow db init
+
       - name: Run pytest
         run: |
           pytest -v --disable-warnings

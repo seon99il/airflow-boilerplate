@@ -7,6 +7,7 @@
 - uv:  Local python package management
 - CI: GitHub Actions를 이용한 pytest Base CI Environment
 - Ansible: Ansible을 이용한 Docker Container `requirements.txt` Manual 동기화 스크립트
+- ruff: 코드 스타일 자동화 도구(ruff)를 이용한 코드 스타일 검사
 
 
 - `requirements-base.txt, requirements.txt` 파일을 분리하여 pip install 캐시 효과 극대화

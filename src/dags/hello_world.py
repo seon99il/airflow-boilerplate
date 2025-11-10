@@ -3,6 +3,9 @@ from datetime import datetime
 from airflow import DAG
 from airflow.operators.python import PythonOperator
 
+from test_utils import test_print_name, test_print_name2
+
+
 def return_name(name):
     return name
 
@@ -21,10 +24,11 @@ with DAG(
 
     hello_task = PythonOperator(
         task_id='print_hello',
-        python_callable=lambda: print("Hello, World!"))
+        python_callable=lambda: test_print_name)
 
     hello_task2 = PythonOperator(
         task_id='print_hello2',
-        python_callable=lambda: print("Hello, World!"))
+        python_callable=lambda: test_print_name2)
+
 
     hello_task >> hello_task2

@@ -8,6 +8,7 @@ dependencies = [
     "ansible>=10.7.0",
     "apache-airflow==2.9.1",
     "apache-airflow-providers-standard>=0.0.1",
+    "custom-package",
     "pytest>=9.0.0",
 ]
 
@@ -15,3 +16,11 @@ dependencies = [
 dev = [
     "ruff>=0.14.4",
 ]
+
+[tool.uv.workspace]
+members = [
+    "src/custom-package",
+]
+
+[tool.uv.sources]
+custom-package = { workspace = true }

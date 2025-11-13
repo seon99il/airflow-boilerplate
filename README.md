@@ -54,6 +54,23 @@ _scripts 안의 docker compose name 및 ansible hosts는 동일한 값이여야 
 - Docker compose 환경에서 volume 마운트로 코드 변경 자동 반영
 - pyproject.toml를 활용한 uv add lib-a 명령어로 local 환경에 lib-a 패키지 설치 가능
 
+- SubModule Structure
+
+```
+lib-a/
+├── pyproject.toml
+├── src/
+│   └── lib_a/          # 메인 패키지 (import lib_a)
+│       ├── __init__.py # 여기서 'api' 모듈을 노출합니다.
+│       ├── common/     # 공통 유틸리티 서브 모듈1 (패키지)
+│       └── api/        # 서브 모듈2 (패키지)
+│           ├── __init__.py # api 모듈의 진입점 (필수)
+│           └── client.py   # api 호출 로직, 함수, 클래스 등을 작성
+└── tests/
+```
+
+_`src/common`, `src/api` 형태가 아닌 `src/lib_a/common`, `src/lib_a/api` 형태 패키지 구조_
+
 ```shell
 uv add lib-a
 ```

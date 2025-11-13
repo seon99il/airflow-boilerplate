@@ -8,7 +8,7 @@
 - CI: GitHub Actions를 이용한 pytest Base CI Environment
 - Ansible: Ansible을 이용한 Docker Container `requirements.txt` Manual 동기화 스크립트
 - ruff: 코드 스타일 자동화 도구(ruff)를 이용한 코드 스타일 검사
-- custom-package: custom components를 구성하고 CI, Docker Airflow 환경에 자동으로 반영 적용
+- custom-libs: custom lib(component)를 구성하고 CI, Docker Airflow 환경에 자동으로 반영 적용
 
 
 - `requirements-base.txt, requirements.txt` 파일을 분리하여 pip install 캐시 효과 극대화
@@ -48,8 +48,22 @@ _scripts 안의 docker compose name 및 ansible hosts는 동일한 값이여야 
 
 #### custom components
 
-> custom components안에 코드를 구성하여 Import 시 path 최적화
+> src/lib 안에 코드를 구성하여 Import 시 path 최적화
 
-- Docker image 빌드 시 pip install custom-components
+- Docker image 빌드 시 src/lib/install_lib.sh 스크립트를 통해 lib 디렉토리 내 라이브러리 목록을 설치
 - Docker compose 환경에서 volume 마운트로 코드 변경 자동 반영
-- pyproject.toml를 활용한 uv add ./src/custom-component 명령어로 local 환경에 custom components 추가
+- pyproject.toml를 활용한 uv add lib-a 명령어로 local 환경에 lib-a 패키지 설치 가능
+
+```shell
+uv add lib-a
+```
+
+1. create new lib
+
+```shell
+cd src/lib
+uv init lib-new --lib # lib-new 디렉토리 생성 및 기본 파일 세팅
+```
+
+2. add lib path to install_lib.sh (for docker image build)
+3. add lib path to requirements-lib.txt (for ci)

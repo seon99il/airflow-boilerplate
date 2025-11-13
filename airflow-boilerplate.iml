@@ -9,6 +9,8 @@
       <sourceFolder url="file://$MODULE_DIR$/src/plugins" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/tests" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/custom-package/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/lib/lib-a/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/lib/lib-b/src" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/.venv" />
       <excludeFolder url="file://$MODULE_DIR$/src/data" />
       <excludeFolder url="file://$MODULE_DIR$/src/logs" />

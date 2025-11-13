@@ -1,11 +1,11 @@
 FROM apache/airflow:2.9.1
 
 COPY requirements.txt .
-COPY custom-package /opt/airflow/custom-package
+COPY lib /opt/airflow/lib
 
 
 RUN pip install --no-cache-dir -r requirements.txt
 USER root
-RUN chown -R airflow /opt/airflow/custom-package
+RUN chown -R airflow /opt/airflow/lib
 USER airflow
-RUN pip install -e /opt/airflow/custom-package
+RUN sh /opt/airflow/lib/install_lib.sh

@@ -8,8 +8,9 @@ dependencies = [
     "ansible>=10.7.0",
     "apache-airflow==2.9.1",
     "apache-airflow-providers-standard>=0.0.1",
-    "custom-package",
     "pytest>=9.0.0",
+    "lib-a",
+    "lib-b",
 ]
 
 [dependency-groups]
@@ -19,8 +20,11 @@ dev = [
 
 [tool.uv.workspace]
 members = [
-    "src/custom-package",
+    "src/lib/lib-a",
+    "src/lib/lib-b",
 ]
 
 [tool.uv.sources]
 custom-package = { workspace = true }
+lib-a = { workspace = true }
+lib-b = { workspace = true }

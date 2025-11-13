@@ -77,18 +77,22 @@ jobs:
         id: cache-full
         with:
           path: ${{ steps.pip-cache.outputs.dir }}
-          key: ${{ runner.os }}-pip-full-${{ hashFiles('src/requirements-base.txt', 'src/requirements.txt') }}
+          key: ${{ runner.os }}-pip-full-${{ hashFiles('src/requirements-base.txt', 'src/requirements-lib.txt') }}
           restore-keys: |
             ${{ runner.os }}-pip-base-${{ hashFiles('src/requirements-base.txt') }}
             ${{ runner.os }}-pip-base-
 
-      - name: Install dependencies
+      - name: Install dependencies (base, project)
         working-directory: src
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements-base.txt
           pip install -r requirements.txt
-          pip install ./custom-package
+
+      - name: Install dependencies (libs)
+        working-directory: src/lib
+        run: |
+          pip install -r requirements-lib.txt
 
       - name: Set Mock Airflow Env
         run: |

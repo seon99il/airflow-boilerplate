@@ -9,6 +9,7 @@
 - Ansible: Ansible을 이용한 Docker Container `requirements.txt` Manual 동기화 스크립트
 - ruff: 코드 스타일 자동화 도구(ruff)를 이용한 코드 스타일 검사
 - custom-libs: custom lib(component)를 구성하고 CI, Docker Airflow 환경에 자동으로 반영 적용
+- DBT Dag: `astronomer-cosmos` DBT Operator를 활용한 DBT Dag
 
 
 - `requirements-base.txt, requirements.txt` 파일을 분리하여 pip install 캐시 효과 극대화

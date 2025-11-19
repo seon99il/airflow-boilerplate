@@ -14,6 +14,8 @@
       <excludeFolder url="file://$MODULE_DIR$/.venv" />
       <excludeFolder url="file://$MODULE_DIR$/src/data" />
       <excludeFolder url="file://$MODULE_DIR$/src/logs" />
+      <excludeFolder url="file://$MODULE_DIR$/src/dags/dbt/logs" />
+      <excludeFolder url="file://$MODULE_DIR$/src/dags/dbt/airflow/logs" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

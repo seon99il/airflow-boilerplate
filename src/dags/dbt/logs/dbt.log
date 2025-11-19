@@ -1,0 +1,60 @@
+[0m17:19:04.909991 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10bfa2910>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10bf75f10>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10bf47350>]}
+
+
+============================== 17:19:04.924854 | 36867740-fb12-4dfe-a32b-de9fcd318a63 ==============================
+[0m17:19:04.924854 [info ] [MainThread]: Running with dbt=1.10.15
+[0m17:19:04.925096 [debug] [MainThread]: running dbt with arguments {'no_print': 'None', 'version_check': 'True', 'cache_selected_only': 'False', 'log_cache_events': 'False', 'introspect': 'True', 'debug': 'False', 'quiet': 'False', 'invocation_command': 'dbt init sample', 'warn_error': 'None', 'log_format': 'default', 'log_path': 'logs', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'empty': 'None', 'profiles_dir': '/Users/seonggil/.dbt', 'target_path': 'None', 'static_parser': 'True', 'write_json': 'True', 'printer_width': '80', 'send_anonymous_usage_stats': 'True', 'fail_fast': 'False', 'use_experimental_parser': 'False', 'partial_parse': 'True', 'indirect_selection': 'eager', 'use_colors': 'True'}
+[0m17:19:04.949098 [debug] [MainThread]: Starter project path: /Users/seonggil/Documents/workspace/Project/airflow-boilerplate/.venv/lib/python3.11/site-packages/dbt/include/starter_project
+[0m17:19:04.951748 [info ] [MainThread]: 
+Your new dbt project "sample" was created!
+
+For more information on how to configure the profiles.yml file,
+please consult the dbt documentation here:
+
+  https://docs.getdbt.com/docs/configure-your-profile
+
+One more thing:
+
+Need help? Don't hesitate to reach out to us via GitHub issues or on Slack:
+
+  https://community.getdbt.com/
+
+Happy modeling!
+
+[0m17:19:04.951892 [info ] [MainThread]: Setting up your profile.
+[0m17:19:20.025170 [error] [MainThread]: Encountered an error:
+
+[0m17:19:20.028520 [error] [MainThread]: Traceback (most recent call last):
+  File "/Users/seonggil/Documents/workspace/Project/airflow-boilerplate/.venv/lib/python3.11/site-packages/dbt/cli/requires.py", line 178, in wrapper
+    result, success = func(*args, **kwargs)
+                      ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/seonggil/Documents/workspace/Project/airflow-boilerplate/.venv/lib/python3.11/site-packages/dbt/cli/requires.py", line 128, in wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/seonggil/Documents/workspace/Project/airflow-boilerplate/.venv/lib/python3.11/site-packages/dbt/cli/main.py", line 483, in init
+    results = task.run()
+              ^^^^^^^^^^
+  File "/Users/seonggil/Documents/workspace/Project/airflow-boilerplate/.venv/lib/python3.11/site-packages/dbt/task/init.py", line 346, in run
+    self.setup_profile(profile_name)
+  File "/Users/seonggil/Documents/workspace/Project/airflow-boilerplate/.venv/lib/python3.11/site-packages/dbt/task/init.py", line 262, in setup_profile
+    self.create_profile_from_target(adapter, profile_name=profile_name)
+  File "/Users/seonggil/Documents/workspace/Project/airflow-boilerplate/.venv/lib/python3.11/site-packages/dbt/task/init.py", line 179, in create_profile_from_target
+    self.create_profile_from_profile_template(profile_template, profile_name)
+  File "/Users/seonggil/Documents/workspace/Project/airflow-boilerplate/.venv/lib/python3.11/site-packages/dbt/task/init.py", line 163, in create_profile_from_profile_template
+    target = self.generate_target_from_input(prompts, initial_target)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/seonggil/Documents/workspace/Project/airflow-boilerplate/.venv/lib/python3.11/site-packages/dbt/task/init.py", line 129, in generate_target_from_input
+    target[key] = click.prompt(
+                  ^^^^^^^^^^^^^
+  File "/Users/seonggil/Documents/workspace/Project/airflow-boilerplate/.venv/lib/python3.11/site-packages/click/termui.py", line 168, in prompt
+    value = prompt_func(prompt)
+            ^^^^^^^^^^^^^^^^^^^
+  File "/Users/seonggil/Documents/workspace/Project/airflow-boilerplate/.venv/lib/python3.11/site-packages/click/termui.py", line 151, in prompt_func
+    raise Abort() from None
+click.exceptions.Abort
+
+[0m17:19:20.030634 [debug] [MainThread]: Resource report: {"command_name": "init", "command_success": false, "command_wall_clock_time": 15.150429, "process_in_blocks": "0", "process_kernel_time": 0.362119, "process_mem_max_rss": "138723328", "process_out_blocks": "0", "process_user_time": 1.231385}
+[0m17:19:20.031444 [debug] [MainThread]: Command `dbt init` failed at 17:19:20.031205 after 15.15 seconds
+[0m17:19:20.032053 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10bf3a350>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10298c390>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10bf453d0>]}
+[0m17:19:20.032395 [debug] [MainThread]: Flushing usage events
+[0m17:19:20.844710 [debug] [MainThread]: An error was encountered while trying to flush usage events

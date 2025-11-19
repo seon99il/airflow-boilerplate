@@ -100,6 +100,7 @@ jobs:
 
       - name: Run pytest
         run: |
+          echo ${PATH}
           pytest -v --disable-warnings
 
       - name: Linting with ruff

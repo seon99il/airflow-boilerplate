@@ -1,2 +1,6 @@
 pytest
+pytest-mock
 ruff
+dbt-core==1.8.4
+dbt-postgres
+astronomer-cosmos==1.11.0

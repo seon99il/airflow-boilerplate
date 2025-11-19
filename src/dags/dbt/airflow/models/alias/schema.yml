@@ -1,0 +1,13 @@
+version: 2
+
+models:
+  - name: dags
+    description: "Airflow DAG"
+    columns:
+      - name: dag_id
+        description: "The primary key for this table"
+        data_tests:
+          - unique
+          - not_null
+  - name: task_fail
+    description: "Airflow Task Fail"

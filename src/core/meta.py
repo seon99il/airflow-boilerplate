@@ -1,2 +1,2 @@
 def get_name():
-    return "airflow-boilerplate V2"
+    return "airflow-boilerplate V3"

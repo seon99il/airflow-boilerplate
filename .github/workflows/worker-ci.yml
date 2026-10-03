@@ -2,7 +2,7 @@ name: worker-ci
 
 on:
   pull_request:
-    branches: [dev]
+    branches: [ dev ]
     paths:
       - 'docker/worker/**'
       - 'src/**'
@@ -22,8 +22,7 @@ jobs:
         run: echo '${{ secrets.GITHUB_TOKEN }}' |
           docker login ghcr.io -u '${{ github.actor }}' --password-stdin
 
-      # PR 에서도 푸시한다. 머지 전에 이 태그로 DAG 를 실제로 돌려볼 수 있어야 한다.
-      # fork PR 은 GITHUB_TOKEN 이 read-only 라 여기서 실패한다 (그때는 PUSH=0 으로)
+
       - name: Build & push
         id: build
         env:

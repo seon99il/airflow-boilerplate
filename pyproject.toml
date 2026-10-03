@@ -1,0 +1,22 @@
+[project]
+name = "airflow-boilerplate"
+version = "0.1.0"
+
+requires-python = "==3.12.*"
+dependencies = []
+
+[dependency-groups]
+airflow = [
+    "apache-airflow-providers-amazon==9.37.0",
+    "apache-airflow-providers-docker==4.6.0",
+]
+common = [
+    "polars>=1.44.2",
+    "pyarrow>=25.0.1",
+]
+
+dev = [
+    { include-group = "airflow" },
+    { include-group = "common" },
+    "apache-airflow==3.1.2",
+]

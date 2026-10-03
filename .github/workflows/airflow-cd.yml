@@ -1,0 +1,47 @@
+name: airflow-cd
+
+on:
+  push:
+    branches: [ dev ]
+    paths:
+      - 'docker/airflow/**'
+      - 'dags/**'
+      - 'plugins/**'
+      - 'pyproject.toml'
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    name: Deploy DAGs & plugins
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: Sync DAGs (mock)
+        run: echo "aws s3 sync dags/ s3://\$AIRFLOW_BUCKET/dags/ --delete --exclude '*__pycache__*'"
+
+      - name: Sync plugins (mock)
+        run: echo "aws s3 sync plugins/ s3://\$AIRFLOW_BUCKET/plugins/ --delete"
+
+
+      - name: Detect dependency change
+        id: deps
+        run: |
+          git diff --quiet '${{ github.event.before }}' '${{ github.sha }}' -- pyproject.toml \
+            && echo 'changed=false' >> "$GITHUB_OUTPUT" \
+            || echo 'changed=true' >> "$GITHUB_OUTPUT"
+
+
+      - name: Rebuild & roll airflow image (mock)
+        if: steps.deps.outputs.changed == 'true'
+        run: |
+          echo "pyproject.toml 변경됨 → airflow 이미지 재빌드 + 컨테이너 교체 필요 (다운타임 발생)"
+          echo "  docker build -f docker/airflow/Dockerfile -t <registry>/airflow:${{ github.sha }} ."
+          echo "  docker push <registry>/airflow:${{ github.sha }}"
+          echo "  (compose 면 up -d --force-recreate / MWAA 면 update-environment → 롤링 수 분)"
+
+      - name: Skip airflow image roll
+        if: steps.deps.outputs.changed != 'true'
+        run: echo "의존성 변경 없음 → 컨테이너 그대로, 복사한 DAG 는 dag-processor 가 스캔해서 반영"

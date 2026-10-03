@@ -1,0 +1,45 @@
+name: worker-cd
+
+on:
+  push:
+    branches: [dev]
+    paths:
+      - 'docker/worker/**'
+      - 'src/**'
+      - 'pyproject.toml'
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    name: Push worker image
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Log in to GHCR
+        run: echo '${{ secrets.GITHUB_TOKEN }}' |
+          docker login ghcr.io -u '${{ github.actor }}' --password-stdin
+
+      - name: Build & push
+        id: build
+        env:
+          REGISTRY: ghcr.io/${{ github.repository }}
+          TAG: ${{ github.sha }}
+          PUSH: '1'
+        run: ./docker/worker/build.sh default
+
+
+      - name: Move :dev tag
+        run: docker push ghcr.io/${{ github.repository }}/worker-default:dev
+
+
+      - name: Update worker_image_tag Variable
+        if: vars.AIRFLOW_API_URL != ''
+        run: |
+          curl -fsS -X POST "${{ vars.AIRFLOW_API_URL }}/api/v2/variables" \
+            -H 'Authorization: Bearer ${{ secrets.AIRFLOW_API_TOKEN }}' \
+            -H 'Content-Type: application/json' \
+            -d '{"key":"worker_image_tag","value":"${{ steps.build.outputs.tag }}"}'

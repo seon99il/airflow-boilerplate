@@ -1,0 +1,8 @@
+.venv
+.idea
+
+# === Airflow ===
+logs/*
+config/*
+
+*.iml

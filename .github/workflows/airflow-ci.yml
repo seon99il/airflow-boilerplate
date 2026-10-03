@@ -1,0 +1,26 @@
+name: airflow-ci
+
+on:
+  pull_request:
+    branches: [ dev ]
+    paths:
+      - 'docker/airflow/**'
+      - 'dags/**'
+      - 'plugins/**'
+      - 'pyproject.toml'
+
+jobs:
+  build:
+    name: Verify airflow image build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Syntax check DAGs & plugins
+        run: python -m compileall -q dags plugins
+
+
+      - name: Build
+        run: |
+          docker build -f docker/airflow/Dockerfile \
+            -t ghcr.io/${{ github.repository }}/airflow:ci .

@@ -2,7 +2,7 @@ name: worker-cd
 
 on:
   push:
-    branches: [dev]
+    branches: [ dev ]
     paths:
       - 'docker/worker/**'
       - 'src/**'
@@ -11,29 +11,37 @@ on:
 
 jobs:
   deploy:
-    name: Push worker image
+    name: Point Airflow at the new worker image
     runs-on: ubuntu-latest
     permissions:
       contents: read
       packages: write
+      pull-requests: read
+    env:
+      REGISTRY: ghcr.io/${{ github.repository }}
     steps:
-      - uses: actions/checkout@v5
-
       - name: Log in to GHCR
         run: echo '${{ secrets.GITHUB_TOKEN }}' |
           docker login ghcr.io -u '${{ github.actor }}' --password-stdin
 
-      - name: Build & push
-        id: build
+
+      - name: Resolve image tag pushed by worker-ci
+        id: img
         env:
-          REGISTRY: ghcr.io/${{ github.repository }}
-          TAG: ${{ github.sha }}
-          PUSH: '1'
-        run: ./docker/worker/build.sh default
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          sha=$(gh api "repos/$GITHUB_REPOSITORY/commits/$GITHUB_SHA/pulls" \
+            --jq '.[0].head.sha // empty')
+          : "${sha:?no PR for $GITHUB_SHA. dev 로 직접 푸시했으면 worker-ci 가 돈 적이 없다}"
+          docker manifest inspect "$REGISTRY/worker-default:$sha" > /dev/null
+          echo "tag=$sha" >> "$GITHUB_OUTPUT"
 
 
       - name: Move :dev tag
-        run: docker push ghcr.io/${{ github.repository }}/worker-default:dev
+        run: |
+          docker buildx imagetools create \
+            -t "$REGISTRY/worker-default:dev" \
+            "$REGISTRY/worker-default:${{ steps.img.outputs.tag }}"
 
 
       - name: Update worker_image_tag Variable
@@ -42,4 +50,4 @@ jobs:
           curl -fsS -X POST "${{ vars.AIRFLOW_API_URL }}/api/v2/variables" \
             -H 'Authorization: Bearer ${{ secrets.AIRFLOW_API_TOKEN }}' \
             -H 'Content-Type: application/json' \
-            -d '{"key":"worker_image_tag","value":"${{ steps.build.outputs.tag }}"}'
+            -d '{"key":"worker_image_tag","value":"${{ steps.img.outputs.tag }}"}'

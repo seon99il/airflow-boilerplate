@@ -11,16 +11,37 @@ on:
 
 jobs:
   build:
-    name: Verify airflow image build
+    name: Verify airflow image & DAG imports
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    env:
+      IMAGE: ghcr.io/${{ github.repository }}/airflow:${{ github.event.pull_request.head.sha }}
     steps:
       - uses: actions/checkout@v5
 
-      - name: Syntax check DAGs & plugins
-        run: python -m compileall -q dags plugins
+      - name: Log in to GHCR
+        run: echo '${{ secrets.GITHUB_TOKEN }}' |
+          docker login ghcr.io -u '${{ github.actor }}' --password-stdin
 
 
-      - name: Build
+      - name: Build & push
         run: |
-          docker build -f docker/airflow/Dockerfile \
-            -t ghcr.io/${{ github.repository }}/airflow:ci .
+          docker build -f docker/airflow/Dockerfile -t "$IMAGE" .
+          docker push "$IMAGE"
+
+
+      - name: DAG import check
+        run: |
+          docker run --rm -v "$PWD/dags:/opt/airflow/dags:ro" "$IMAGE" python -c '
+          import sys
+          sys.path.append("/opt/airflow/dags")
+          from airflow.models.dagbag import DagBag
+          bag = DagBag("/opt/airflow/dags", include_examples=False)
+          for f, err in bag.import_errors.items():
+              rel = f.split("/opt/airflow/dags/")[-1]
+              print("::error file=dags/" + rel + "::" + err.replace("\n", "%0A"))
+          print(f"parsed {len(bag.dags)} dag(s): {sorted(bag.dags)}")
+          sys.exit(1 if bag.import_errors else 0)
+          '

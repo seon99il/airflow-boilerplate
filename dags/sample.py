@@ -13,4 +13,8 @@ with DAG(
         task_id="print_meta",
         script="printer.py",
         fn_name="print_meta",
+    ) >> DomainDockerOperator(
+        task_id="print_meta",
+        script="printer.py",
+        fn_name="print_meta",
     )
